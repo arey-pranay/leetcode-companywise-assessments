@@ -1,0 +1,44 @@
+class Solution {
+    public String multiply(String num1, String num2) {
+        int m = num1.length();
+        int n = num2.length();
+        int carry = 0;
+        StringBuilder ans = new StringBuilder();
+        for(int diff = 2; diff < m+n+2; diff++){
+            int temp = 0;
+            for(int d1 = 1; d1<diff; d1++){
+                for(int d2 = 1; d2<diff; d2++){
+                    if(d1 + d2 > diff) break;
+                    if(d1+d2 < diff) continue;
+                    int i1 = m-d1;
+                    int i2 = n-d2;
+                    if(i1<0 || i2<0) continue;
+                    temp += ((num1.charAt(i1)-'0')*(num2.charAt(i2)-'0'));
+                }
+            }
+            temp += carry;
+            ans.append(String.valueOf(temp%10));
+            carry = temp/10;
+        }
+        int index=0;
+        int len = ans.length();
+        ans = ans.reverse();
+        while(ans.charAt(index)=='0' && index<len-1) index++;
+        return ans.substring(index, len);
+        
+        
+    }
+}
+
+    //                                         1         2      3
+    //                                         4         5      6
+    // ------------------------------------------------------------
+    //     ->                             (m-3*n-1)     (m-2*n-1)  m-1*n-1 
+    // +   ->             (m-3 * n-2)     (m-2 * n-2)   (m-1*n-2)  X
+    // +   ->(m-3 * n-3)  (m-2 * n-3)     (m-1*n-3)        X       X
+    // -----------------------------------------------------------------
+    
+    // -----------------------------------------------------------------
+    
+    //   ( .. + carry)   ((n*m-1 + m*n-1 + carry)%10 = 8 -> carry2) ((m*n)%10 = 8 -> carry1)
+        
