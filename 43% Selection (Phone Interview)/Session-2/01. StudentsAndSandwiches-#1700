@@ -1,0 +1,20 @@
+class Solution {
+    public int countStudents(int[] students, int[] sandwiches) {
+        Queue<Integer> q = new LinkedList<>();
+        for(int i: students) q.add(i);
+        int j =0;
+        int mismatch = 0;
+        while(!q.isEmpty()){
+            if(q.peek() == sandwiches[j]){
+                q.poll();
+                mismatch=0;
+                j++;
+            } else{
+                q.offer(q.poll());
+                mismatch++;
+                if(mismatch == q.size()) break;
+            }
+        }
+        return q.size();
+    }
+}
